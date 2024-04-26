@@ -23,6 +23,40 @@ function read(num) {
 //console.log(element);
 }
 
+
+
+    const solve = (board) => {
+        for (let row = 0; row < 9; row++) {
+            for (let col = 0; col < 9; col++) {
+                if (board[row][col] === '-') {
+                    for (let num = 1; num <= 9; num++) {
+                        if (isValid(row, col, num.toString())) {
+                            board[row][col] = num.toString();
+                            if (solve()) {
+                                return true;
+                            }
+                            board[row][col] = '-';
+                        }
+                    }
+                    return false;
+                }
+            }
+        }
+        return true;
+    };
+
+    solve();
+    return board;
+
+
+
+
+
+
+
+
+
+
 function solve(read) {
 
   /**
