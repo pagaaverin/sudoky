@@ -1,31 +1,48 @@
-const fs = require('fs')
+
+const { publicDecrypt } = require("crypto");
+const fs = require("fs");
 
 function read(num) {
-  const read1 = fs.readFileSync("./puzzles.txt", "utf-8").split('\n')
-  
-  let element = read1.map((el)=> el.split(','))
-  let element2 = element.map((el) => el[0].match(/.{9}/g))
+  const read1 = fs.readFileSync("./puzzles.txt", "utf-8").split("\n");
+  // console.log(read1);
+  const getSudoku = read1[num - 1].split("");
 
-  for (let i = 0; i < element2.length; i++) {
-    for (let index = 0; index <  element2[i].length; index++) {
-     element2[i][index] = element2[i][index].split("");
-      
-    }
-    
-   
-    
+
+  const board = [];
+  for (let i = 0; i < 9; i++) {
+    board.push(getSudoku.slice(i * 9, (i + 1) * 9));
   }
-  return element2[num];
-  
-  /**
-   * Прочесть файл puzzles.txt в кодировке 'utf-8' и вернуть эти данные из функции
-   */
-//console.log(element);
+
+  return board;
+function solveSudoku(board) {
+  const isValid = (row, col, num) => {
+      // Проверяем, нет ли уже этой цифры в текущей строке
+      for (let i = 0; i < 9; i++) {
+          if (board[row][i] === num) {
+              return false;
+          }
+      }
+      // Проверяем, нет ли уже этой цифры в текущем столбце
+      for (let i = 0; i < 9; i++) {
+          if (board[i][col] === num) {
+              return false;
+          }
+      }
+      // Проверяем, нет ли уже этой цифры в текущем 3x3 подквадрате
+      const startRow = Math.floor(row / 3) * 3;
+      const startCol = Math.floor(col / 3) * 3;
+      for (let i = startRow; i < startRow + 3; i++) {
+          for (let j = startCol; j < startCol + 3; j++) { 
+              if (board[i][j] === num) {
+                  return false;
+              }
+        
+      }
+      return true;
+  };
 }
-
-
-
-    const solve = (board) => {
+}
+   const solve = (board) => {
         for (let row = 0; row < 9; row++) {
             for (let col = 0; col < 9; col++) {
                 if (board[row][col] === '-') {
@@ -47,35 +64,3 @@ function read(num) {
 
     solve();
     return board;
-
-
-
-
-
-
-
-
-
-
-function solve(read) {
-
-  /**
-   * Принимает игровое поле в том формате, в котором его вернули из функции read.
-   * Возвращает игровое поле после попытки его решить.
-   */
-}
-
-function isSolved() {
-  /**
-   * Принимает игровое поле в том формате, в котором его вернули из функции solve.
-   * Возвращает булевое значение — решено это игровое поле или нет.
-   */
-}
-
-function prettyBoard() {
-  /**
-   * Принимает игровое поле в том формате, в котором его вернули из функции solve.
-   * Выводит в консоль/терминал судоку.
-   * Подумай, как симпатичнее его вывести.
-   */
-}
