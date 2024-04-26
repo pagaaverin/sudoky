@@ -14,4 +14,3 @@ function read(num) {
 
   return board;
 }
-// console.log(read(1));
