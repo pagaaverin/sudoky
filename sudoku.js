@@ -1,3 +1,4 @@
+
 const { publicDecrypt } = require("crypto");
 const fs = require("fs");
 
@@ -6,7 +7,7 @@ function read(num) {
   // console.log(read1);
   const getSudoku = read1[num - 1].split("");
 
-  // console.log(getSudoku);
+
   const board = [];
   for (let i = 0; i < 9; i++) {
     board.push(getSudoku.slice(i * 9, (i + 1) * 9));
@@ -41,3 +42,25 @@ function solveSudoku(board) {
   };
 }
 }
+   const solve = (board) => {
+        for (let row = 0; row < 9; row++) {
+            for (let col = 0; col < 9; col++) {
+                if (board[row][col] === '-') {
+                    for (let num = 1; num <= 9; num++) {
+                        if (isValid(row, col, num.toString())) {
+                            board[row][col] = num.toString();
+                            if (solve()) {
+                                return true;
+                            }
+                            board[row][col] = '-';
+                        }
+                    }
+                    return false;
+                }
+            }
+        }
+        return true;
+    };
+
+    solve();
+    return board;
