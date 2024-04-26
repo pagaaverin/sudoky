@@ -1,27 +1,17 @@
-function read() {
-  /**
-   * Прочесть файл puzzles.txt в кодировке 'utf-8' и вернуть эти данные из функции
-   */
-}
+const { publicDecrypt } = require("crypto");
+const fs = require("fs");
 
-function solve() {
-  /**
-   * Принимает игровое поле в том формате, в котором его вернули из функции read.
-   * Возвращает игровое поле после попытки его решить.
-   */
-}
+function read(num) {
+  const read1 = fs.readFileSync("./puzzles.txt", "utf-8").split("\n");
+  // console.log(read1);
+  const getSudoku = read1[num - 1].split("");
 
-function isSolved() {
-  /**
-   * Принимает игровое поле в том формате, в котором его вернули из функции solve.
-   * Возвращает булевое значение — решено это игровое поле или нет.
-   */
-}
+  // console.log(getSudoku);
+  const board = [];
+  for (let i = 0; i < 9; i++) {
+    board.push(getSudoku.slice(i * 9, (i + 1) * 9));
+  }
 
-function prettyBoard() {
-  /**
-   * Принимает игровое поле в том формате, в котором его вернули из функции solve.
-   * Выводит в консоль/терминал судоку.
-   * Подумай, как симпатичнее его вывести.
-   */
+  return board;
 }
+// console.log(read(1));
